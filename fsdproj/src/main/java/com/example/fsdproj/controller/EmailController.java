@@ -16,8 +16,10 @@ public class EmailController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/api/send-email")
     public String sendEmail(@RequestBody Email email) {
-        System.out.println("Sendingg");
+        System.out.println("Sending");
         System.out.println(email.getToEmail());
+        System.out.println(email.getText());
+
         emailService.sendEmail(email);
         return "Email sent successfully!";
     }

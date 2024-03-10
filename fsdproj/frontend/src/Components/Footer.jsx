@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Footer.css';
+import axios from "axios";
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -8,27 +9,18 @@ const Footer = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8080/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, message }),
-      });
-      if (response.ok) {
-        setSuccessMessage('Email sent successfully');
-        setEmail('');
-        setMessage('');
-      } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Error sending email');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('Error sending email');
-    }
+    const cart = {
+      toEmail:email,
+      text: message
+    };
+
+    axios.post('http://localhost:8080/api/send-email', cart)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error adding item to cart:', error);
+        });
   };
 
   return (

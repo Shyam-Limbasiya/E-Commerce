@@ -48,6 +48,21 @@ public class CartController {
         return ResponseEntity.ok("Item added to cart successfully");
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/api/remove-from-cart")
+    public ResponseEntity<?> removeFromCart(@RequestBody Cart cart) {
+        System.out.println(cart.getItems());
+        User user =cart.getUser();
+        Cart cart1= cartRepository.findByUser(user);
+
+            List<Long> items =cart1.getItems();
+            List<Long> id= cart.getItems();
+            items.removeAll(id);
+            cartRepository.save(cart1);
+
+        return ResponseEntity.ok("Item remove from cart successfully");
+    }
+
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/api/fetchItems")
