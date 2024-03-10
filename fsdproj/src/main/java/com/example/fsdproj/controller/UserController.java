@@ -1,8 +1,4 @@
 package com.example.fsdproj.controller;
-
-// UserController.java
-
-
 import com.example.fsdproj.entity.User;
 import com.example.fsdproj.repository.UserRepository;
 import com.example.fsdproj.service.UserService;
@@ -12,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -54,9 +49,7 @@ public class UserController {
 
             user.setPassword((user.getPassword()));
 
-
             userRepository.save(user);
-
             Map<String, String> response = new HashMap<>();
             response.put("data", "User registered successfully");
             return ResponseEntity.ok(response);
@@ -67,7 +60,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/checkuser/{username}")
     public User checkUserExistence(@PathVariable String username) {

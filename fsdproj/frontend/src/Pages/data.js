@@ -1,6 +1,6 @@
 import mobile from "../Assets/mobile.jpg"
 import laptop from "../Assets/laptop.jpeg"
-const Data=[
+export const Data=[
     {
         id: 1,
         name: "Mobile",
@@ -77,4 +77,3 @@ const Data=[
    
 
 ]
- export {Data}

@@ -25,15 +25,11 @@ const App = () => {
   
       return(
         <>
-        {/* router ma bafha route define krvana */}
           <Router>
             <Routes>
             <Route path="/" element={<Login/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
-
-
-
               <Route path="/home" element={<Home/>}/>
               <Route path="/about" element={<About/>}/>
               <Route path="/products" element={<Products/>}/>
@@ -41,9 +37,7 @@ const App = () => {
               <Route path="singleproduct/:id" element={<Singleproduct/>}/>
               <Route path="/cart" element={<CartPage/>}/>
               <Route path="/ShopPage" element={<ShopPage/>}/>
-              
             </Routes>
-
           </Router>
         </> 
       );

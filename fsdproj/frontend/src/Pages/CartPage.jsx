@@ -1,43 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
-const CartPage = ({ cart }) => {
-    // Check if cart is undefined or null
-    if (!cart) {
-        return (
-            <>
-                <Header/>
-                <p className="text-center">Your cart is empty.</p>
-                <Footer/>
-            </>
-        );
+import axios from "axios";
+import { Data } from "./data";
+
+const CartPage = () => {
+    const [user, setUser] = useState(null);
+    const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
+
+    const fetchdata = () => {
+        const email = localStorage.getItem("email");
+        if (email) {
+            axios.get(`http://localhost:8080/api/users?email=${email}`)
+                .then(response => {
+                    setUser(response.data);
+                    axios.post('http://localhost:8080/api/fetchItems', response.data)
+                        .then(response => {
+                            setItems(response.data);
+                        })
+                        .catch(error => {
+                            console.error('Error while fetching the items:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Error fetching user:', error);
+                });
+        }
     }
+
+    useEffect(() => {
+        fetchdata();
+    }, []);
+
+    useEffect(() => {
+        const filtered = items.filter(item => Data.some(dataItem => dataItem.id === item.id));
+        setFilteredItems(filtered);
+    }, [items]);
+
+
     return (
         <>
-        <Header/>
-    <div className="container mt-5">
-      <h1 className="text-center mb-5">Cart Page</h1>
-      {cart.length === 0 ? (
-        <p className="text-center">Your cart is empty.</p>
-      ) : (
-        <div className="row">
-          {cart.map((item) => (
-            <div key={item.id} className="col-lg-4 col-md-6 mb-4">
-              <div className="card">
-                <img src={item.imageUrl} className="card-img-top" alt={item.name} />
-                <div className="card-body">
-                  <h5 className="card-title">{item.name}</h5>
-                  <p className="card-text">${item.price}</p>
-                </div>
-              </div>
+            <Header/>
+            <div>
+                <h2>Hello</h2>
+                {filteredItems.map(item => (
+                    <div key={item.id}>
+                        {console.log(item)} {/* Add this line */}
+                        <img src={Data.find(dataItem => dataItem.id === item.id)?.imageUrl} alt={item.name} />
+                        <p>{item.name} - {item.price}</p>
+                    </div>
+                ))}
+
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-        <Footer/>
+            <Footer/>
         </>
-  );
+    );
 };
 
 export default CartPage;
