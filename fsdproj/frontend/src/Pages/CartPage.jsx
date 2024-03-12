@@ -55,9 +55,6 @@ const CartPage = () => {
             });
     };
 
-
-
-
     return (
         <>
             <Header/>

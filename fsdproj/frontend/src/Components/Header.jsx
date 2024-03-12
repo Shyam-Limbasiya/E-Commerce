@@ -28,6 +28,9 @@ const Header = () => {
           <li className="nav-item">
             <Link to="/cart" className="nav-link">Cart</Link>
           </li>
+          <li className="nav-item" style={{marginLeft:"1000px"}}>
+            <Link to="/" className="nav-link">Log out</Link>
+          </li>
         </ul>
       </nav>
     </header>
